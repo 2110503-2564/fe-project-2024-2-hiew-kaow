@@ -7,9 +7,12 @@ import { useEffect, useState } from "react"
 import { DentistJson } from "../../../interface"
 import createAppointment from "@/libs/createAppointment"
 import { TextField } from "@mui/material"
+import { useSession } from "next-auth/react"
+import getUserProfile from "@/libs/getUserProfile"
 
 export default function booking() {
 
+    const { data: session } = useSession();
     const urlParams = useSearchParams()
     const id = urlParams.get('id')
     const router = useRouter();
@@ -18,8 +21,14 @@ export default function booking() {
         return <main className="text-red-500 text-center mt-[150px] text-4xl font-bold"> Please select dentist before booking </main>
     }
 
+    if(!session){
+        return <main className="text-red-500 text-center mt-[150px] text-4xl font-bold"> Please login before booking </main>
+    }
+
+
     const [dentist, setDentist] = useState<DentistJson | null>(null);
     const [apptDate, setApptDate] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
     const [description, setDescription] = useState("")
 
     useEffect(()=>{
@@ -27,7 +36,12 @@ export default function booking() {
             const data = await getDentist(id)
             setDentist(data)
         }
+        const fetchUser = async () => {
+            const data = await getUserProfile(session?.user.token)
+            setUserId(data.data._id)
+        }
         fetchDentist(id)
+        fetchUser()
     }, [])
 
     if (!dentist) return (<main className="text-4xl text-center mt-[150px] font-bold text-blue-600">Loading...</main>)
@@ -38,9 +52,15 @@ export default function booking() {
                 alert("Please select appointment date");
                 return;
             }
-            // await createAppointment("Token", "description", apptDate, id); 
+            if(!session) return null;
+            if(!userId) return null;
+            console.log("token : " + session?.user.token);
+            console.log("description : " + description);
+            console.log("apptDate : " + apptDate);
+            console.log("id : " + id);
+            console.log("UserID : " + userId);
+            await createAppointment(session?.user.token, description, apptDate, id, userId); 
             alert("Appointment scheduled successfully!");
-
             router.push("/profile");
         } catch (error) {
             console.error("Failed to schedule appointment:", error);
@@ -81,7 +101,7 @@ export default function booking() {
                             sx={{
                                 marginBottom: "20px"
                             }}/>
-                        <button className="w-2/3 rounded-md bg-blue-600 hover:bg-sky-600 py-3 text-white text-xl"
+                        <button className="w-2/3 rounded-md bg-blue-600 hover:bg-sky-600 py-3 text-white text-xl cursor-pointer"
                         onClick={handleScheduleAppointment}>
                             Schedule Appointment
                         </button>

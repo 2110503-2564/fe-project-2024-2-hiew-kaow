@@ -46,9 +46,11 @@ export default async function DentistPage({ params }: { params: Promise<{ did: s
             <h2 className="text-2xl font-semibold">{dentist.name}</h2>
             <p className="text-lg">Years of Experience: {dentist.yearsOfExperience}</p>
             <p className="text-lg">Expertise: {dentist.areasOfExpertise.join(", ")}</p>
-            <button className="mt-4 p-2 bg-blue-500 text-white rounded">
-              Book an Appointment
-            </button>
+            <Link href={`/booking?id=${params.did}`}>
+              <div className="mt-4 p-2 bg-blue-500 text-white rounded cursor-pointer">
+                Book an Appointment
+              </div>
+            </Link>
           </div>
         </div>
       </div>
@@ -57,12 +59,12 @@ export default async function DentistPage({ params }: { params: Promise<{ did: s
       <div className="flex justify-between px-8">
         {prevDentist ? (
           <Link href={`/dentist/${prevDentist._id}`}>
-            <button className="p-2 bg-blue-500 rounded">Previous</button>
+            <button className="p-2 bg-blue-500 rounded cursor-pointer">Previous</button>
           </Link>
         ) : <div /> /* Empty div to keep spacing */}
         {nextDentist ? (
           <Link href={`/dentist/${nextDentist._id}`}>
-            <button className="p-2 bg-blue-500 rounded">Next</button>
+            <button className="p-2 bg-blue-500 rounded cursor-pointer">Next</button>
           </Link>
         ) : <div />}
       </div>

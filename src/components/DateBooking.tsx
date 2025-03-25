@@ -17,7 +17,7 @@ export default function DateBooking({ onApptDateChange }:{ onApptDateChange:Func
             }}
             orientation="landscape"
             disablePast
-            onChange={ (newValue) => {onApptDateChange(newValue?.format("YYYY-MM-DDTHH:mm:ss.SSS[Z]"))} }
+            onChange={ (newValue) => {onApptDateChange(newValue?.format("YYYY-MM-DD"))} }
             maxDate={maxDate}
             />
 

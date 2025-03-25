@@ -25,8 +25,6 @@ export default function () {
           </div>
         )
       }
-
-
       <Image
         src={covers[idx % covers.length]}
         alt="cover"

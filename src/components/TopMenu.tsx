@@ -29,7 +29,7 @@ export default async function TopMenu() {
         <TopMenuItem title="View Our Dentists" pageRef="/dentist" />
         <TopMenuItem title="Booking" pageRef="/booking" />
         {session ? (
-          <Link href="/account">
+          <Link href="/profile">
             <div className="h-full px-2 text-cyan-600 text-sm">My Account</div>
           </Link>
         ) : (
