@@ -22,10 +22,7 @@ export default async function createAppointment(
   );
 
   if (!response.ok) {
-    if (response.status === 400) {
-      alert("You already have an appointment."); // Display the alert to the user
-      return
-    }
+    throw new Error();
   }
   return await response.json();
 }

@@ -27,13 +27,17 @@ export default function AppointmentTicket({appt, token, isPast, isAdmin} : {appt
         if (!confirmed) return;
     
         try {
+            document.body.style.cursor = "wait";
             await editAppointment(token, appt._id, {apptDate:apptDate, desc:desc});
             
             alert("Appointment updated successfully!");
         } catch (error) {
             console.error("Failed to updated appointment:", error);
             alert("Failed to updated the appointment. Please try again.");
-        }
+        } finally {
+            // Reset the cursor to default after the operation
+            document.body.style.cursor = "default";
+        }    
     }
 
     const handleDelete = async () => {
@@ -41,6 +45,7 @@ export default function AppointmentTicket({appt, token, isPast, isAdmin} : {appt
         if (!confirmed) return;
     
         try {
+            document.body.style.cursor = "wait";
             await deleteAppointment(token, appt._id);
             
             alert("Appointment deleted successfully!");
@@ -48,7 +53,11 @@ export default function AppointmentTicket({appt, token, isPast, isAdmin} : {appt
         } catch (error) {
             console.error("Failed to delete appointment:", error);
             alert("Failed to delete the appointment. Please try again.");
+        } finally {
+            // Reset the cursor to default after the operation
+            document.body.style.cursor = "default";
         }
+    
     };
 
     const handleComplete = async () => {
@@ -56,6 +65,7 @@ export default function AppointmentTicket({appt, token, isPast, isAdmin} : {appt
         if (!confirmed) return;
     
         try {
+            document.body.style.cursor = "wait";
             await completeAppointment(token, appt._id);
             
             alert("Appointment completed successfully!");
@@ -63,7 +73,10 @@ export default function AppointmentTicket({appt, token, isPast, isAdmin} : {appt
         } catch (error) {
             console.error("Failed to completed appointment:", error);
             alert("Failed to completed the appointment. Please try again.");
-        }
+        } finally {
+            // Reset the cursor to default after the operation
+            document.body.style.cursor = "default";
+        }    
     }
     
     return (

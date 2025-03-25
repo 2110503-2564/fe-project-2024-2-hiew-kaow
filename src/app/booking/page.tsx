@@ -54,18 +54,23 @@ export default function booking() {
             }
             if(!session) return null;
             if(!userId) return null;
-            console.log("token : " + session?.user.token);
-            console.log("description : " + description);
-            console.log("apptDate : " + apptDate);
-            console.log("id : " + id);
-            console.log("UserID : " + userId);
+                // console.log("token : " + session?.user.token);
+                // console.log("description : " + description);
+                // console.log("apptDate : " + apptDate);
+                // console.log("id : " + id);
+                // console.log("UserID : " + userId);
+            document.body.style.cursor = "wait";
             await createAppointment(session?.user.token, description, apptDate, id, userId); 
             alert("Appointment scheduled successfully!");
             router.push("/profile");
         } catch (error) {
             console.error("Failed to schedule appointment:", error);
-            alert("Failed to schedule appointment. Please try again.");
+            alert("You already have an appointment.");
+        } finally {
+            // Reset the cursor to default after the operation
+            document.body.style.cursor = "default";
         }
+    
     };
 
     return (
@@ -75,10 +80,11 @@ export default function booking() {
                 <div className="flex flex-row items-center justify-center space-x-5">
                     <div className="block w-fit h-full bg-gray-200 rounded-lg p-5">
                         <Image 
-                            src="https://example.com/image.jpg"
+                            src={`/img/${dentist.data.name}.jpg`}
                             alt="Remote image"
                             width={0}
                             height={0}
+                            sizes="20vh"
                             className="w-full h-auto mb-4"
                         />
                         <div className="text-2xl font-bold text-blue-600">Dr.{dentist.data.name}</div>
