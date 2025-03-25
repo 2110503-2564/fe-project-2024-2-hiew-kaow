@@ -11,20 +11,29 @@ export default function () {
     const [idx, setIndex] = useState(0);
 
   return (
-    <div className="m-0 p-0 w-[100vw] h-[60vh]" onClick={() => {setIndex(idx+1)}}>
-        {
-            session? <div className="absolute top-20 right-20 z-30 text-center text-xl text-red-500">Logged in</div> 
-            : <div className="absolute top-20 right-20 z-30 text-center text-xl text-red-500">Please login</div>
-        }
-      {/* <Image
-        src={covers[idx%3]}
+    <div className="m-0 p-0 w-[100vw] h-[50vh]" onClick={() => {setIndex(idx+1)}}>
+      {
+        session ? (
+          <div className="absolute top-20 right-20 z-30 text-center text-xl text-white 
+            text-shadow-lg" style={{ textShadow: '0px 0px 5px rgba(0, 255, 0, 1), 0px 0px 10px rgba(0, 255, 0, 1)' }}>
+            Logged in
+          </div>
+        ) : (
+          <div className="absolute top-20 right-20 z-30 text-center text-xl text-white 
+            text-shadow-lg" style={{ textShadow: '0px 0px 5px rgba(255, 0, 0, 1), 0px 0px 10px rgba(255, 0, 0, 1)' }}>
+            Please login
+          </div>
+        )
+      }
+
+
+      <Image
+        src={covers[idx % covers.length]}
         alt="cover"
-        width={0}
-        height={0}
-        sizes="100vh"
-        className="w-2/3 object-fill"
-      /> */}
-      <div className="w-full h-[70vh] bg-blue-300 flex justify-center items-center text-center text-xl"> Banner </div>
+        width={1920}
+        height={1080}
+        className="w-full h-full object-cover"
+      />
     </div>
   );
 }

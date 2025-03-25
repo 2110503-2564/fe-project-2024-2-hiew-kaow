@@ -1,0 +1,45 @@
+// src/app/dentist/page.tsx
+import Banner from "@/components/Banner";
+import Card from "@/components/Card"; // Reuse your Card component
+import Link from "next/link";
+
+// This is an async server component that fetches dentist data from the API.
+export default async function DentistPage() {
+  const res = await fetch("https://hiew-kaow-dentist.vercel.app/api/v1/dentists", {
+    cache: "no-store",
+  });
+  const json = await res.json();
+  const dentists = json.data;
+
+  return (
+    <main
+      style={{
+        backgroundColor: "#f0f0f0",
+        minHeight: "100vh",
+        margin: 0,
+        overflow: "hidden",
+      }}
+    >
+      <Banner />
+
+      <div className="mt-5 text-center">
+
+        <div className="grid grid-cols-3 gap-8 justify-items-center mb-5">
+          {dentists.map((dentist: any) => (
+            <Link key={dentist._id} href={`/dentist/${dentist._id}`}>
+              <Card
+                key={dentist._id}
+                imgSrc={`/img/${dentist.name}.jpg`}
+                dentistName={dentist.name}
+                areasOfExpertise={dentist.areasOfExpertise.join(", ")}
+                yearsOfExperience={(dentist.yearsOfExperience).toString()}
+              />
+            </Link>
+          ))}
+        </div>
+
+      </div>
+
+    </main>
+  );
+}
