@@ -31,7 +31,7 @@ export default async function DentistPage() {
                 key={dentist._id}
                 imgSrc={`/img/${dentist.name}.jpg`}
                 dentistName={dentist.name}
-                areasOfExpertise={dentist.areaOfExpertise.join(", ")}
+                areasOfExpertise={dentist.areasOfExpertise.join(", ")}
                 yearsOfExperience={dentist.yearsOfExperience.toString()}
               />
             </Link>

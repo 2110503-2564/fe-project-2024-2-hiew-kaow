@@ -2,7 +2,7 @@ export interface DentistItem {
     _id: string,
     name: string,
     yearsOfExperience: number,
-    areaOfExpertise: string[],
+    areasOfExpertise: string[],
     picture: string,
     __v: number,
     id: string

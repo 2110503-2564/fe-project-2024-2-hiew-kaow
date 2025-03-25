@@ -92,7 +92,7 @@ export default function Booking() {
                         <div className="text-2xl font-bold text-blue-600">Dr.{dentist.data.name}</div>
                         <div className="text-2xl font-bold text-blue-600">Area(s) of expertise: </div>
                         <ul className="text-xl font-bold text-gray-600">
-                            {dentist.data.areaOfExpertise.map((area:string, index:number) => (
+                            {dentist.data.areasOfExpertise.map((area:string, index:number) => (
                                 <li key={index}>{area}</li>
                             ))}
                         </ul>
