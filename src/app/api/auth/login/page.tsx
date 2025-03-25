@@ -1,9 +1,10 @@
 'use client'
 
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import userLogIn from '@/libs/userLogIn';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 
 export default function SignInPage() {
   const [formData, setFormData] = useState({
@@ -104,9 +105,9 @@ export default function SignInPage() {
 
         <p className="text-center text-gray-500 text-sm mt-4">
           Don’t have an account?{' '}
-          <a href="/api/auth/register" className="text-blue-500 hover:underline">
+          <Link href="/api/auth/register" className="text-blue-500 hover:underline">
             Register
-          </a>
+          </Link>
         </p>
       </div>
     </div>

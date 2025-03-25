@@ -1,4 +1,3 @@
-import Banner from "@/components/Banner";
 import Link from "next/link";
 
 interface Dentist {

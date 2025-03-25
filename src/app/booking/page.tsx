@@ -10,7 +10,7 @@ import { TextField } from "@mui/material"
 import { useSession } from "next-auth/react"
 import getUserProfile from "@/libs/getUserProfile"
 
-export default function booking() {
+export default function Booking() {
 
     const { data: session } = useSession();
     const urlParams = useSearchParams()

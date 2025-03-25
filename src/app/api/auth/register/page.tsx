@@ -1,6 +1,7 @@
 'use client'
 import { useState } from 'react';
 import { registerUser } from '@/libs/registerUser';
+import Link from 'next/link';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -136,9 +137,9 @@ export default function RegisterPage() {
 
         <p className="text-center text-gray-500 text-sm mt-3">
           Already have an account?{' '}
-          <a href="/api/auth/login" className="text-blue-500 hover:underline">
+          <Link href="/api/auth/login" className="text-blue-500 hover:underline">
             Login
-          </a>
+          </Link>
         </p>
       </div>
     </div>
