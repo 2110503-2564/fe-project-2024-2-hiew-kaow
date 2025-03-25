@@ -57,7 +57,6 @@ export const authOptions: AuthOptions = {
     async session({
       session,
       token,
-      user, // This user is provided by NextAuth
     }: {
       session: Session | DefaultSession;
       token: JWT; // Default JWT type from NextAuth
