@@ -51,7 +51,7 @@ export default async function profile(){
                     {
                       (pastAppointment.length !== 0) ? pastAppointment.map((item:BookingItem) => (
                             <AppointmentTicket key={item._id} appt={item} isPast={true} token={session.user.token} isAdmin={(profile.data.role == "admin")}/>
-                          )) : <div>No past appointment</div>
+                          )) : <div className="mt-7">No past appointment</div>
                     }
                 </div>
             </div>
