@@ -16,7 +16,11 @@ export default function Booking() { // ✅ เปลี่ยนชื่อเ�
     const urlParams = useSearchParams()
     const id = urlParams.get('id')
     const router = useRouter();
-
+    
+    const [dentist, setDentist] = useState<DentistJson | null>(null);
+    const [apptDate, setApptDate] = useState<string | null>(null);
+    const [userId, setUserId] = useState<string | null>(null);
+    const [description, setDescription] = useState("")
     if (!id) {
         return <main className="text-red-500 text-center mt-[150px] text-4xl font-bold"> Please select dentist before booking </main>
     }
@@ -25,10 +29,6 @@ export default function Booking() { // ✅ เปลี่ยนชื่อเ�
         return <main className="text-red-500 text-center mt-[150px] text-4xl font-bold"> Please login before booking </main>
     }
 
-    const [dentist, setDentist] = useState<DentistJson | null>(null);
-    const [apptDate, setApptDate] = useState<string | null>(null);
-    const [userId, setUserId] = useState<string | null>(null);
-    const [description, setDescription] = useState("")
 
     useEffect(() => {
         const fetchDentist = async (id: string) => {

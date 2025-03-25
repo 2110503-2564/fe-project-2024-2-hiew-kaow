@@ -49,8 +49,12 @@ export default function SignInPage() {
           window.location.href = '/';
         }, 100);
       }
-    } catch (err: any) {
-      setError(err.message || 'Invalid email or password.');
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(err.message || 'Invalid email or password.');
+      } else {
+        setError('An unexpected error occurred.');
+      }
     }
   };
   
