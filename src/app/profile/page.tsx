@@ -14,11 +14,13 @@ export default async function profile(){
     if(!session || !session.user.token) return null
 
     const profile = await getUserProfile(session.user.token)
-    console.log("Profile : " + profile.data)
-    var createdAt = new Date(profile.data.createdAt);
+    const pastAppointment = profile.data.appointmentHistory
+    console.log((profile.data.role == "admin"))
   
     const appointmentJson = await getAppointments(session.user.token)
-    console.log(appointmentJson.data)
+    // console.log(appointmentJson.data)
+
+
 
     return(
         <main className="flex flex-row w-screen h-screen justify-center">
@@ -33,16 +35,24 @@ export default async function profile(){
 
             <div className="w-[70%] pt-[100px]">
                 <div className="flex flex-col items-center">
-                    <div className="text-4xl text-blue-500 font-semibold">Your appointment</div>
+                    {
+                        (profile.data.role == "admin") ? <div className="text-4xl text-blue-500 font-semibold">All appointment</div> :
+                                                        <div className="text-4xl text-blue-500 font-semibold">Your appointment</div>
+                    }
                     {
                       (appointmentJson.data.length !== 0) ? appointmentJson.data.map((item:BookingItem) => (
-                            <AppointmentTicket key={item._id} appt={item}/>
-                          )) : <div>Don't have appointment</div>
+                            <AppointmentTicket key={item._id} appt={item} token={session.user.token} isAdmin={(profile.data.role == "admin")}/>
+                          )) : <div>No schedule appointment</div>
                     }
                 </div>
                 <Divider orientation="horizontal" variant="middle" flexItem sx={{ marginY: "20px",borderRadius: "10px", borderWidth: "3px" }}/>
                 <div className="flex flex-col items-center">
                     <div className="text-4xl text-blue-500 font-semibold">Your past appointment</div>
+                    {
+                      (pastAppointment.length !== 0) ? pastAppointment.map((item:BookingItem) => (
+                            <AppointmentTicket key={item._id} appt={item} token={session.user.token} isAdmin={(profile.data.role == "admin")}/>
+                          )) : <div>No past appointment</div>
+                    }
                 </div>
             </div>
         </main>

@@ -2,6 +2,7 @@
 import Banner from "@/components/Banner";
 import Card from "@/components/Card"; // Reuse your Card component
 import Link from "next/link";
+import { DentistItem } from "../../../interface";
 
 // This is an async server component that fetches dentist data from the API.
 export default async function DentistPage() {
@@ -21,7 +22,7 @@ export default async function DentistPage() {
       }}
     >
 
-      <div className="mt-5 pt-20 text-center">
+      <div className="pt-20 text-center">
         {/* Heading above the dentists grid */}
         <h2 className="text-3xl text-black font-bold mb-8">Our Dentists</h2>
 
