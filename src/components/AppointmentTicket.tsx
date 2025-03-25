@@ -9,7 +9,6 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import deleteAppointment from "@/libs/deleteAppointment"
 import editAppointment from "@/libs/editAppointment"
 import completeAppointment from "@/libs/completeAppointment"
-import getDentist from "@/libs/getDentist"
 export default function AppointmentTicket({appt, token, isPast, isAdmin} : {appt:BookingItem, token:string, isPast:boolean, isAdmin:boolean}) {
 
     const [isEditing, setEditing] = useState(false)

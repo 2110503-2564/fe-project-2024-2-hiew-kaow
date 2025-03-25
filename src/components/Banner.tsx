@@ -3,9 +3,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useSession } from 'next-auth/react'
 
-export default function () {
-
-    const { data: session } = useSession();
+export default function Banner() {
 
     const covers = ['/img/cover.jpg', '/img/cover2.jpg', '/img/cover3.jpg']
     const [idx, setIndex] = useState(0);
