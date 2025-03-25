@@ -15,7 +15,7 @@ export default async function profile(){
 
     const profile = await getUserProfile(session.user.token)
     const pastAppointment = profile.data.appointmentHistory
-    console.log((profile.data.role == "admin"))
+    console.log(profile.data._id)
   
     const appointmentJson = await getAppointments(session.user.token)
     // console.log(appointmentJson.data)
@@ -28,7 +28,7 @@ export default async function profile(){
                 <h1 className="text-8xl text-blue-500 font-bold">Hello!</h1>
                 <h2 className="text-6xl text-gray-600 font-bold">{profile.data.name}</h2>
                 <div className="text-xl text-gray-600 font-bold mt-[50px]">Contact number:</div>
-                <ContactNumber telProp={profile.data.tel}/>
+                <ContactNumber telProp={profile.data.tel} token={session.user.token} userId={profile.data._id}/>
                 <SignOutButton/>
             </div>
             <Divider orientation="vertical" variant="middle" flexItem sx={{ height: "80%", marginTop: "6.5%", borderRadius: "10px", borderWidth: "3px" }}/>

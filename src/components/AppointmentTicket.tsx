@@ -8,6 +8,7 @@ import dayjs from "dayjs"
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs"
 import deleteAppointment from "@/libs/deleteAppointment"
 import editAppointment from "@/libs/editAppointment"
+import completeAppointment from "@/libs/completeAppointment"
 export default function AppointmentTicket({appt, token, isAdmin} : {appt:BookingItem, token:string, isAdmin:boolean}) {
 
     const [isEditing, setEditing] = useState(false)
@@ -41,7 +42,21 @@ export default function AppointmentTicket({appt, token, isAdmin} : {appt:Booking
             console.error("Failed to delete appointment:", error);
             alert("Failed to delete the appointment. Please try again.");
         }
-    };    
+    };
+
+    const handleComplete = async () => {
+        const confirmed = window.confirm("Complete this appointment?");
+        if (!confirmed) return;
+    
+        try {
+            await completeAppointment(token, appt._id);
+            
+            alert("Appointment completed successfully!");
+        } catch (error) {
+            console.error("Failed to completed appointment:", error);
+            alert("Failed to completed the appointment. Please try again.");
+        }
+    }
     
     return (
         <div className="flex flex-row bg-slate-200 w-[80%] h-auto m-5 p-5 rounded shadow-md">
@@ -54,7 +69,9 @@ export default function AppointmentTicket({appt, token, isAdmin} : {appt:Booking
                      <LocalizationProvider dateAdapter={AdapterDayjs}>
                          <DatePicker
                          value={dayjs(apptDate)} // Convert date to dayjs object
-                         onChange={(newDate) => {if (newDate) setApptDate(newDate.format("YYYY-MM-DD"))}} // Update state with formatted date
+                         onChange={(newDate) => {if (newDate) setApptDate(newDate.format("YYYY-MM-DD"))}}
+                         disablePast
+                         maxDate={dayjs().add(3, "month")}
                          /> 
                      </LocalizationProvider>
                     :
@@ -102,6 +119,17 @@ export default function AppointmentTicket({appt, token, isAdmin} : {appt:Booking
                     >
                     {isEditing? "Save":"Edit"}
                 </div>
+                {
+                    isAdmin ? 
+                    <div 
+                        className="text-xl text-amber-800 hover:text-yellow-100 bg-yellow-200 hover:bg-yellow-500 rounded px-3 py-2 w-fit border-2 border-yellow-600 select-none hover:cursor-pointer"
+                        onClick={handleComplete}
+                        >
+                        Complete this appointment
+                    </div>
+                    :
+                    null
+                }
             </div>
         </div>
     )

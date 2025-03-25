@@ -4,22 +4,25 @@ import { IconButton, TextField } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import CancelIcon from '@mui/icons-material/Cancel';
+import updateUser from "@/libs/updateUser";
 
-export default function ContactNumber({telProp}:{telProp:string}) {
+export default function ContactNumber({telProp, token, userId}:{telProp:string, token:string, userId:string}) {
   
     const [isEditing, setIsEditing] = useState(false);
     const [tel, setTel] = useState(telProp);
     const [telEdit, setTelEdit] = useState(telProp)
 
-    const handleEditClick = () => {
+    const handleEditClick = async () => {
+        console.log(token + " " + userId)
         if (isEditing) {
             // Validation logic when clicking Save
             const isValid = /^\d{3}-\d{3}-\d{4}$/.test(telEdit) && telEdit.length == 12;
     
             if (isValid) {
                 // Exit edit mode if valid
-                setIsEditing(false);
                 setTel(telEdit);
+                await updateUser(token, userId, tel);
+                setIsEditing(false);
             } else {
                 alert("Invalid contact number.");
             }
