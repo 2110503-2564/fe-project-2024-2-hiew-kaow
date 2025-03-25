@@ -21,7 +21,14 @@ export default function ContactNumber({telProp, token, userId}:{telProp:string, 
             if (isValid) {
                 // Exit edit mode if valid
                 setTel(telEdit);
-                await updateUser(token, userId, tel);
+                try {
+                    document.body.style.cursor = "wait";
+                    await updateUser(token, userId, tel);
+                }catch(err) {
+                    console.log(err)
+                } finally {
+                    document.body.style.cursor = "default";
+                }            
                 setIsEditing(false);
             } else {
                 alert("Invalid contact number.");
