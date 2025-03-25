@@ -1,4 +1,4 @@
-export default async function editAppointment( token: string , userId: string, tel:string ) {
+export default async function editUser( token: string , userId: string, tel:string ) {
     const response = await fetch(`https://hiew-kaow-dentist.vercel.app/api/v1/user/${userId}`, {
         method: "PUT",
         headers: {

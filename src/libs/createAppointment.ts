@@ -14,15 +14,18 @@ export default async function createAppointment(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        description: "sleep",
-        apptDate: "2025-03-01",
-        user: "67c4752b76ace7c3c8658267",
+        description: description,
+        apptDate: apptDate,
+        user: userId,
       }),
     }
   );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch user profile");
+    if (response.status === 400) {
+      alert("You already have an appointment."); // Display the alert to the user
+      return
+    }
   }
   return await response.json();
 }

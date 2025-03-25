@@ -15,7 +15,7 @@ export default async function profile(){
 
     const profile = await getUserProfile(session.user.token)
     const pastAppointment = profile.data.appointmentHistory
-    console.log(profile.data._id)
+    // console.log(pastAppointment)
   
     const appointmentJson = await getAppointments(session.user.token)
     // console.log(appointmentJson.data)
@@ -41,7 +41,7 @@ export default async function profile(){
                     }
                     {
                       (appointmentJson.data.length !== 0) ? appointmentJson.data.map((item:BookingItem) => (
-                            <AppointmentTicket key={item._id} appt={item} token={session.user.token} isAdmin={(profile.data.role == "admin")}/>
+                            <AppointmentTicket key={item._id} appt={item} isPast={false} token={session.user.token} isAdmin={(profile.data.role == "admin")}/>
                           )) : <div>No schedule appointment</div>
                     }
                 </div>
@@ -50,7 +50,7 @@ export default async function profile(){
                     <div className="text-4xl text-blue-500 font-semibold">Your past appointment</div>
                     {
                       (pastAppointment.length !== 0) ? pastAppointment.map((item:BookingItem) => (
-                            <AppointmentTicket key={item._id} appt={item} token={session.user.token} isAdmin={(profile.data.role == "admin")}/>
+                            <AppointmentTicket key={item._id} appt={item} isPast={true} token={session.user.token} isAdmin={(profile.data.role == "admin")}/>
                           )) : <div>No past appointment</div>
                     }
                 </div>
