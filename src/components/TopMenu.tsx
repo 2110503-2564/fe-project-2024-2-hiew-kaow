@@ -19,19 +19,19 @@ export default async function TopMenu() {
           height={0}
           sizes="100vh"
         />
-        <div className="ml-5 text-md text-center text-cyan-600 hover:text-indigo-600 transition-all">
+        <div className="ml-5 text-md text-center text-cyan-600">
           Hiew Kaow Dental Clinic
         </div>
       </div>
       <div className="flex absolute flex-row right-0 mr-10">
         <TopMenuItem title="Booking" pageRef="/booking" />
         {session ? (
-          <Link href="/api/auth/signout">
+          <Link href="/account">
             <div className="h-full px-2 text-cyan-600 text-sm">My Account</div>
           </Link>
         ) : (
-          <Link href="/api/auth/signin">
-            <div className="h-full px-2 text-cyan-600 text-sm">Sign in</div>
+          <Link href="/api/auth/register">
+            <div className="h-full px-2 text-cyan-600 text-sm">Sign-up</div>
           </Link>
         )}
       </div>
