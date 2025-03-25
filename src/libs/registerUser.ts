@@ -38,7 +38,7 @@ export const registerUser = async (formData: {
       const data = await response.json();
       return { success: false, message: data.error || "Registration failed." };
     }
-  } catch (error) {
+  } catch {
     return { success: false, message: "An error occurred. Please try again." };
   }
 };

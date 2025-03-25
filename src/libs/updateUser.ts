@@ -14,7 +14,7 @@ export default async function editUser( token: string , userId: string, tel:stri
         try {
             const errorData = await response.json();
             throw new Error(errorData.message || "Failed to update user");
-        } catch (err) {
+        } catch {
             throw new Error("An unknown error occurred while updating the user");
         }
     }
