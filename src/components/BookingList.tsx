@@ -10,11 +10,11 @@ export default function BookingList() {
         <main className="w-full h-screen bg-white p-5">
         {
             bookingItems? bookingItems.map((item) => (
-                <div className="bg-slate-200 rounded px-5 mx-5 py-2 my-2" key={item.bookDate}>
+                <div className="bg-slate-200 rounded px-5 mx-5 py-2 my-2" key={item.apptDate}>
                     <div className="text-sm">{item.nameLastname}</div>
                     <div className="text-sm">{item.tel}</div>
-                    <div className="text-sm">{item.dentist}</div>
-                    <div className="text-sm">{item.bookDate}</div>
+                    <div className="text-sm">{item.dentist.name}</div>
+                    <div className="text-sm">{item.apptDate}</div>
                     <button className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-1 text-white shadow-sm" onClick={() => {dispatch(removeBooking(item))}}>Remove Reservation</button>
                 </div>
             ))

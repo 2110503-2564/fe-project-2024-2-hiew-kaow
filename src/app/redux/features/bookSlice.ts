@@ -14,13 +14,13 @@ export const bookSlice = createSlice({
     reducers:{
         addBooking: (state, action:PayloadAction<BookingItem>) => {
             state.bookItems = state.bookItems.filter(
-                (obj) => obj.bookDate !== action.payload.bookDate
+                (obj) => obj.apptDate !== action.payload.apptDate
             );
             state.bookItems.push(action.payload);
         },
         removeBooking: (state, action:PayloadAction<BookingItem>) => {
             const remainBookings = state.bookItems.filter(obj => {
-                return ((obj.bookDate !== action.payload.bookDate)
+                return ((obj.apptDate !== action.payload.apptDate)
                         || (obj.nameLastname !== action.payload.nameLastname)
                         || (obj.dentist!== action.payload.dentist)
                         || (obj.tel !== action.payload.tel));   
