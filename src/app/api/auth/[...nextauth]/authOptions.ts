@@ -1,72 +1,46 @@
 import CredentialsProvider from "next-auth/providers/credentials";
-import { AuthOptions } from "next-auth";
+import { AuthOptions, Session } from "next-auth";
 import userLogIn from "@/libs/userLogIn";
-import { JWT } from "next-auth/jwt";
-import { Session, DefaultSession } from "next-auth";
 
-// Define the User interface to match the expected structure of the user object
-interface User {
-  _id: string;
-  email: string;
-  name: string;
-  tel: string;
-  password: string;  // Consider removing password in production
-  role: string;
-  token: string;  // JWT token
-}
-
-// Define the ExtendedJWT to include the user object
-interface ExtendedJWT extends JWT {
-  user?: User;
-}
-
-// Adjust the `session` callback to ensure proper types for `session` and `token`
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        email: { label: "Email", type: "email", placeholder: "Email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials) return null;
+        // The name to display on the sign in form (e.g. "Sign in with...")
+        name: "Credentials",
+        // `credentials` is used to generate a form on the sign in page.
+        // You can specify which fields should be submitted, by adding keys to the `credentials` object.
+        // e.g. domain, username, password, 2FA token, etc.
+        // You can pass any HTML attribute to the <input> tag through the object.
+        credentials: {
+          email: { label: "Email", type: "email", placeholder: "Email" },
+          password: { label: "Password", type: "password" }
+        },
+        async authorize(credentials) {
+          
+          if(!credentials) return null
+          const user = await userLogIn(credentials.email, credentials.password)
 
-        // Assuming userLogIn returns an object that matches the User interface
-        const user = await userLogIn(credentials.email, credentials.password);
-
-        if (user) {
-          return user;  // Return user of type `User`
-        } else {
-          return null;
+          if (user) {
+            // Any object returned will be saved in `user` property of the JWT
+            return user
+          } else {
+            // If you return null then an error will be displayed advising the user to check their details.
+            return null
+    
+            // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
+          }
         }
-      },
-    }),
+      })
+    
   ],
-  session: { strategy: "jwt" },
+  session: {strategy: "jwt"},
   callbacks: {
-    // jwt callback: add the user to the token
-    async jwt({ token, user }: { token: ExtendedJWT; user?: User }): Promise<ExtendedJWT> {
-      if (user) {
-        token.user = user;  // Add user to the token object
-      }
-      return token;
+    async jwt({token, user}){
+        return {...token, ...user}
     },
-
-    // session callback: properly type session and token
-    async session({
-      session,
-      token,
-    }: {
-      session: Session | DefaultSession;
-      token: JWT; // Default JWT type from NextAuth
-      user: User | null; // The user from the callback
-    }): Promise<Session | DefaultSession> {
-      // Ensure token.user is accessible
-      if (token && (token as ExtendedJWT).user) {
-        session.user = (token as ExtendedJWT).user; // Safely assign user from token
-      }
-      return session; // Return the session object
-    },
-  },
+    async session({session, token}){
+        session.user = token as any
+        return session;
+    }
+  }
 };
