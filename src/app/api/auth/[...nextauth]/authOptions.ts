@@ -1,25 +1,33 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { AuthOptions } from "next-auth";
 import userLogIn from "@/libs/userLogIn";
+import { JWT } from "next-auth/jwt";
+import { Session, DefaultSession } from "next-auth";
 
-// Define User interface to match the expected structure of the user object
+// Define the User interface to match the expected structure of the user object
 interface User {
-  _id: string;    // Required field
+  _id: string;
   email: string;
   name: string;
-  tel: string;    // Assuming phone number is part of the user object
-  password: string; // Assuming password is part of the user object (consider removing in production)
+  tel: string;
+  password: string;  // Consider removing password in production
   role: string;
-  token: string;   // JWT token, assuming it's part of the user object
+  token: string;  // JWT token
 }
 
+// Define the ExtendedJWT to include the user object
+interface ExtendedJWT extends JWT {
+  user?: User;
+}
+
+// Adjust the `session` callback to ensure proper types for `session` and `token`
 export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
         email: { label: "Email", type: "email", placeholder: "Email" },
-        password: { label: "Password", type: "password" }
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
         if (!credentials) return null;
@@ -28,23 +36,38 @@ export const authOptions: AuthOptions = {
         const user = await userLogIn(credentials.email, credentials.password);
 
         if (user) {
-          return user;  // Make sure this returns a user of type `User`
+          return user;  // Return user of type `User`
         } else {
           return null;
         }
-      }
-    })
+      },
+    }),
   ],
   session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, user }): Promise<any> {
+    // jwt callback: add the user to the token
+    async jwt({ token, user }: { token: ExtendedJWT; user?: User }): Promise<ExtendedJWT> {
       if (user) {
+        token.user = user;  // Add user to the token object
       }
       return token;
     },
-    async session({ session, token }) {
-      session.user = token.user as User;
-      return session;
-    }
-  }
+
+    // session callback: properly type session and token
+    async session({
+      session,
+      token,
+      user, // This user is provided by NextAuth
+    }: {
+      session: Session | DefaultSession;
+      token: JWT; // Default JWT type from NextAuth
+      user: User | null; // The user from the callback
+    }): Promise<Session | DefaultSession> {
+      // Ensure token.user is accessible
+      if (token && (token as ExtendedJWT).user) {
+        session.user = (token as ExtendedJWT).user; // Safely assign user from token
+      }
+      return session; // Return the session object
+    },
+  },
 };
