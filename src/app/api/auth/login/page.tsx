@@ -24,33 +24,35 @@ export default function SignInPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+  
     if (!formData.email || !formData.password) {
       setError('All fields are required.');
       return;
     }
-
+  
     try {
       const result = await userLogIn(formData.email, formData.password);
-
       console.log('Login Successful:', result);
-
+  
       const authResult = await signIn('credentials', {
         redirect: false,
         email: formData.email,
         password: formData.password,
       });
-
+  
       if (authResult?.error) {
         setError(authResult.error);
       } else {
-        router.replace('/');
-        setTimeout(() => window.location.reload(), 100); 
+        router.push('/');
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 100);
       }
     } catch (err: any) {
       setError(err.message || 'Invalid email or password.');
     }
   };
+  
 
   return (
     <div className="min-h-screen flex mt-50 justify-center bg-gray-50">
