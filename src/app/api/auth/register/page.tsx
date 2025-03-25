@@ -12,6 +12,7 @@ export default function RegisterPage() {
   });
 
   const [message, setMessage] = useState<string | null>(null);
+  const [isError, setIsError] = useState(false); // New state to check for error
 
   // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,11 +29,13 @@ export default function RegisterPage() {
 
     if (!formData.name || !formData.tel || !formData.email || !formData.password) {
       setMessage('All fields are required.');
+      setIsError(true);
       return;
     }
 
     const result = await registerUser(formData);
     setMessage(result.message);
+    setIsError(!result.success); // If success is false, set it as an error
 
     if (result.success) {
       setFormData({
@@ -40,21 +43,24 @@ export default function RegisterPage() {
         tel: '',
         email: '',
         password: '',
-        role: 'user',
+        role: 'user'
       });
     }
   };
 
   return (
-    <div className="min-h-screen flex mt-30 justify-center bg-gray-50 overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 overflow-hidden">
       <div className="w-full max-w-sm">
-        {/* Heading */}
         <h1 className="text-3xl font-bold text-center text-blue-500 mb-4">
           Register
         </h1>
 
         {message && (
-          <p className={`text-center mb-3 ${message.includes('successful') ? 'text-green-500' : 'text-red-500'}`}>
+          <p
+            className={`text-center mb-3 ${
+              isError ? 'text-red-500' : 'text-green-500'
+            }`}
+          >
             {message}
           </p>
         )}
@@ -69,7 +75,9 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
               placeholder="Name Surname"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`w-full px-3 py-2 border ${
+                isError ? 'border-red-400' : 'border-gray-300'
+              } rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400`}
             />
           </div>
 
@@ -82,7 +90,9 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
               placeholder="xxx-xxx-xxxx"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`w-full px-3 py-2 border ${
+                isError ? 'border-red-400' : 'border-gray-300'
+              } rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400`}
             />
           </div>
 
@@ -95,7 +105,9 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
               placeholder="Email@email.com"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`w-full px-3 py-2 border ${
+                isError ? 'border-red-400' : 'border-gray-300'
+              } rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400`}
             />
           </div>
 
@@ -108,7 +120,9 @@ export default function RegisterPage() {
               onChange={handleChange}
               required
               placeholder="********"
-              className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className={`w-full px-3 py-2 border ${
+                isError ? 'border-red-400' : 'border-gray-300'
+              } rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-400`}
             />
           </div>
 
@@ -120,7 +134,7 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        <p className="text-center text-gray-500 text-sm mt-5">
+        <p className="text-center text-gray-500 text-sm mt-3">
           Already have an account?{' '}
           <a href="/login" className="text-blue-500 hover:underline">
             Login

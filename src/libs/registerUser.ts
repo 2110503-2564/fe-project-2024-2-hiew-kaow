@@ -12,7 +12,10 @@ export const registerUser = async (formData: {
         body: JSON.stringify(formData),
       });
       console.log(JSON.stringify(formData))
-      console.log(response)
+      if (response.status === 400) {
+        // Email already exists
+        return { success: false, message: 'Email already exists' };
+      }
       if (response.ok) {
         const data = await response.json();
         return { success: true, message: data.message || 'Registration successful!' };
