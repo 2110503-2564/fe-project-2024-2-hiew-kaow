@@ -1,5 +1,6 @@
 import Card from "@/components/Card"; // Reuse your Card component
 import Link from "next/link";
+import { DentistItem } from "../../../interface";
 
 // This is an async server component that fetches dentist data from the API.
 export default async function DentistPage() {
@@ -24,7 +25,7 @@ export default async function DentistPage() {
         <h2 className="text-3xl text-black font-bold mb-8">Our Dentists</h2>
 
         <div className="grid grid-cols-3 gap-8 justify-items-center mb-5">
-          {dentists.map((dentist: any) => (
+          {dentists.map((dentist: DentistItem) => (
             <Link key={dentist._id} href={`/dentist/${dentist._id}`}>
               <Card
                 key={dentist._id}
