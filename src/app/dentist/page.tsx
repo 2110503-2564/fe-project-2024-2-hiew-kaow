@@ -20,9 +20,10 @@ export default async function DentistPage() {
         overflow: "hidden",
       }}
     >
-      <Banner />
 
-      <div className="mt-5 text-center">
+      <div className="mt-5 pt-20 text-center">
+        {/* Heading above the dentists grid */}
+        <h2 className="text-3xl text-black font-bold mb-8">Our Dentists</h2>
 
         <div className="grid grid-cols-3 gap-8 justify-items-center mb-5">
           {dentists.map((dentist: any) => (
@@ -32,14 +33,12 @@ export default async function DentistPage() {
                 imgSrc={`/img/${dentist.name}.jpg`}
                 dentistName={dentist.name}
                 areasOfExpertise={dentist.areasOfExpertise.join(", ")}
-                yearsOfExperience={(dentist.yearsOfExperience).toString()}
+                yearsOfExperience={dentist.yearsOfExperience.toString()}
               />
             </Link>
           ))}
         </div>
-
       </div>
-
     </main>
   );
 }
