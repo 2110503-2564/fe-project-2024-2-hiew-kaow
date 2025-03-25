@@ -14,6 +14,12 @@ export interface DentistJson {
     pagination: Object,
     data: DentistItem[]
   }
+export interface DentistJson1 {
+    success: boolean,
+    count: number,
+    pagination: Object,
+    data: DentistItem
+}
 
 export interface BookingItem {
     _id: string,

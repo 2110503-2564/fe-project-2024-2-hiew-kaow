@@ -17,7 +17,7 @@ export default function AppointmentTicket({appt, token, isPast, isAdmin} : {appt
     const [dentist, setDentist] = useState("")
 
     useEffect(()=>{
-        if (isPast) setDentist(appt.dentist)
+        if (isPast) setDentist(appt.dentist.name)
         else setDentist(appt.dentist.name)
     }, [])
 
@@ -116,7 +116,7 @@ export default function AppointmentTicket({appt, token, isPast, isAdmin} : {appt
                 }
 
                 {
-                    (isAdmin&&!isPast) ? <div><strong>User</strong> : {appt.user.name}</div> : null
+                    (isAdmin&&!isPast) ? <div><strong>User</strong> : {appt.user}</div> : null
                 }
             </div>
             <div className="flex flex-row-reverse w-[60%] items-center p-5 space-x-reverse space-x-5">

@@ -4,7 +4,7 @@ import { useSearchParams, useRouter } from "next/navigation"
 import getDentist from "@/libs/getDentist"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import { DentistJson } from "../../../interface"
+import { DentistJson1 } from "../../../interface"
 import createAppointment from "@/libs/createAppointment"
 import { TextField } from "@mui/material"
 import { useSession } from "next-auth/react"
@@ -17,7 +17,7 @@ export default function Booking() {
     const id = urlParams.get('id')
     const router = useRouter();
 
-    const [dentist, setDentist] = useState<DentistJson | null>(null);
+    const [dentist, setDentist] = useState<DentistJson1 | null>(null);
     const [apptDate, setApptDate] = useState<string | null>(null);
     const [userId, setUserId] = useState<string | null>(null);
     const [description, setDescription] = useState("")
@@ -75,7 +75,6 @@ export default function Booking() {
             }
             
         };
-
         return (
             <main>
             <div className="flex flex-col w-screen h-screen items-center justify-center space-y-5">
@@ -93,7 +92,7 @@ export default function Booking() {
                         <div className="text-2xl font-bold text-blue-600">Dr.{dentist.data.name}</div>
                         <div className="text-2xl font-bold text-blue-600">Area(s) of expertise: </div>
                         <ul className="text-xl font-bold text-gray-600">
-                            {dentist.data.areasOfExpertise.map((area:string, index:number) => (
+                            {dentist.data.areaOfExpertise.map((area:string, index:number) => (
                                 <li key={index}>{area}</li>
                             ))}
                         </ul>

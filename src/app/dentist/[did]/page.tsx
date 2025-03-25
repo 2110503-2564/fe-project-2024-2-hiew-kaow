@@ -42,7 +42,7 @@ export default async function DentistPage({ params }: { params: Promise<{ did: s
             <h2 className="text-2xl font-semibold">{dentist.name}</h2>
             <p className="text-lg">Years of Experience: {dentist.yearsOfExperience}</p>
             <p className="text-lg">Expertise: {dentist.areasOfExpertise.join(", ")}</p>
-            <Link href={`/booking?id=${params.did}`}>
+            <Link href={`/booking?id=${(await params).did}`}>
               <div className="mt-4 p-2 bg-blue-500 text-white rounded cursor-pointer text-center">
                 Book an Appointment
               </div>
