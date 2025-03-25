@@ -27,14 +27,13 @@ export default async function TopMenu() {
       </div>
       <div className="flex absolute flex-row right-0 mr-10">
         <TopMenuItem title="View Our Dentists" pageRef="/dentist" />
-        <TopMenuItem title="Booking" pageRef="/booking" />
         {session ? (
           <Link href="/profile">
-            <div className="h-full px-2 text-cyan-600 text-sm">My Account</div>
+            <div className="ml-10 h-full px-2 text-cyan-600 text-sm hover:scale-110 transition-all ">My Account</div>
           </Link>
         ) : (
           <Link href="/api/auth/register">
-            <div className="h-full px-2 text-cyan-600 text-sm">Sign-up</div>
+            <div className="ml-10 h-full px-2 text-cyan-600 text-sm hover:scale-110 transition-all ">Sign-up</div>
           </Link>
         )}
       </div>

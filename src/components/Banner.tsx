@@ -12,19 +12,6 @@ export default function () {
 
   return (
     <div className="m-0 p-0 w-[100vw] h-[50vh]" onClick={() => {setIndex(idx+1)}}>
-      {
-        session ? (
-          <div className="absolute top-20 right-20 z-30 text-center text-xl text-white 
-            text-shadow-lg" style={{ textShadow: '0px 0px 5px rgba(0, 255, 0, 1), 0px 0px 10px rgba(0, 255, 0, 1)' }}>
-            Logged in
-          </div>
-        ) : (
-          <div className="absolute top-20 right-20 z-30 text-center text-xl text-white 
-            text-shadow-lg" style={{ textShadow: '0px 0px 5px rgba(255, 0, 0, 1), 0px 0px 10px rgba(255, 0, 0, 1)' }}>
-            Please login
-          </div>
-        )
-      }
       <Image
         src={covers[idx % covers.length]}
         alt="cover"

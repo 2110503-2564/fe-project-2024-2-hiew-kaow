@@ -24,7 +24,6 @@ export default async function DentistPage({ params }: { params: Promise<{ did: s
   if (!dentist) {
     return (
       <main style={{ backgroundColor: "#f0f0f0", minHeight: "100vh", margin: 0, overflow: "hidden" }}>
-        <Banner />
         <div className="p-8 text-center text-black">Dentist not found.</div>
       </main>
     );
@@ -32,8 +31,6 @@ export default async function DentistPage({ params }: { params: Promise<{ did: s
 
   return (
     <main style={{ backgroundColor: "#f0f0f0", minHeight: "100vh", margin: 0, overflow: "hidden" }}>
-      <Banner />
-
       {/* Main content container */}
       <div className="flex justify-center p-8">
         <div className="flex gap-8">
@@ -47,7 +44,7 @@ export default async function DentistPage({ params }: { params: Promise<{ did: s
             <p className="text-lg">Years of Experience: {dentist.yearsOfExperience}</p>
             <p className="text-lg">Expertise: {dentist.areasOfExpertise.join(", ")}</p>
             <Link href={`/booking?id=${params.did}`}>
-              <div className="mt-4 p-2 bg-blue-500 text-white rounded cursor-pointer">
+              <div className="mt-4 p-2 bg-blue-500 text-white rounded cursor-pointer text-center">
                 Book an Appointment
               </div>
             </Link>
@@ -59,12 +56,12 @@ export default async function DentistPage({ params }: { params: Promise<{ did: s
       <div className="flex justify-between px-8">
         {prevDentist ? (
           <Link href={`/dentist/${prevDentist._id}`}>
-            <button className="p-2 bg-blue-500 rounded cursor-pointer">Previous</button>
+            <button className="p-2 bg-blue-500 rounded cursor-pointer text-center">Previous</button>
           </Link>
         ) : <div /> /* Empty div to keep spacing */}
         {nextDentist ? (
           <Link href={`/dentist/${nextDentist._id}`}>
-            <button className="p-2 bg-blue-500 rounded cursor-pointer">Next</button>
+            <button className="p-2 bg-blue-500 rounded cursor-pointer text-center">Next</button>
           </Link>
         ) : <div />}
       </div>
